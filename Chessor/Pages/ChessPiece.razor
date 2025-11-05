@@ -1,0 +1,55 @@
+﻿@using System.Numerics
+@using Chessor.Helpers
+<img src="Images/PawnWhite.png" class="chess-piece"
+     draggable="false"
+     @onmousedown="SelectPiece"
+     @onmouseup="DeselectPiece"
+     @onmousemove="MovePiece"
+     style="left: @posXpx; top: @posYpx" 
+     >
+
+@code
+{
+    bool isSelect = false;
+    double posX = 0;
+    double posY = 0;
+    double xOffset = 0;
+    double yOffset = 0;
+    string posXpx => $"{posX}px";
+    string posYpx => $"{posY}px";
+    
+    [Parameter]
+    public Chess Chess { get; set; }
+
+    public Vector2 Coordinate => new Vector2((float)posX, (float)posY);
+
+    void SelectPiece(MouseEventArgs e)
+    {
+        isSelect = true;
+        yOffset = e.ClientY - posY;
+        xOffset = e.ClientX - posX;
+    }
+    
+    void DeselectPiece(MouseEventArgs e)
+    {
+        isSelect = false;
+        TryPlaceOnBoard(e);
+    }
+
+    private void TryPlaceOnBoard(MouseEventArgs e)
+    {
+        ChessGrid closest = Chess.Board.ChessGrids.GetClosest(Coordinate);
+        
+        posX = (int)closest.Position.X;
+        posY = (int)closest.Position.Y;
+    }
+
+    void MovePiece(MouseEventArgs e)
+    {
+        if(!isSelect)
+            return;
+        
+        posX = e.ClientX - xOffset;
+        posY = e.ClientY - yOffset;
+    }
+}

@@ -1,0 +1,41 @@
+﻿@inject IJSRuntime JS
+<div class="grid">
+    <table>
+        @for (int i = 0; i < 4; i++)
+        {
+            if (i %2 == 0)
+            {
+                <tr>
+                    <ChessLine Line="ChessLine.ChessLineType.White" yPos="i" Board="this"/>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <ChessLine Line="ChessLine.ChessLineType.Black" yPos="i" Board="this"/>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+
+@code
+{
+    [Parameter]
+    public Chess Chess { get; set;}
+    public List<ChessGrid> ChessGrids = new List<ChessGrid>();
+    public string Name = "My Super board";
+
+    protected override void OnInitialized()
+    {
+        Chess.Board = this;
+        base.OnInitialized();
+    }
+
+    public async Task AddGrid(ChessGrid grid)
+    {
+        ChessGrids.Add(grid);
+        Console.WriteLine($"Grid added at {grid.xPos} / {grid.yPos} / {grid.CellRef.Id}");
+    }
+}

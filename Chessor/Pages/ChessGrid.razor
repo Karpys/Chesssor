@@ -1,0 +1,45 @@
+﻿@using System.Numerics
+@implements Chessor.Helpers.ICoordinate
+@if (Color == GridColor.Black)
+{
+    <td class="black-grid chess-grid" @ref="_cellRef"></td>
+}
+else
+{
+    <td class="white-grid chess-grid" @ref="_cellRef"></td>
+}
+
+
+@code
+{
+    [Parameter]
+    public GridColor Color { get; set; } = GridColor.White;
+    [Parameter]
+    public int xPos { get; set; } = 0;
+    [Parameter]
+    public int yPos { get; set; } = 0;
+    [Parameter]
+    public ChessBoard Board { get; set;}
+    private ElementReference _cellRef;
+
+    public ElementReference CellRef => _cellRef;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Position = await DivHelper.GetDivPosition(_cellRef);
+            await Board.AddGrid(this);
+        }
+    }
+
+    public enum GridColor
+    {
+        Black,
+        White,
+    }
+
+    public Position Position { get; set; }
+    public Vector2 Coordinate => new Vector2((float)Position.X, (float)Position.Y);
+}

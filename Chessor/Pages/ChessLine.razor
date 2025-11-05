@@ -1,0 +1,52 @@
+﻿@for (int i = 0; i < 8; i++)
+{
+    if (i % 2 == 0)
+    {
+        if (Line == ChessLineType.Black)
+        {
+            <ChessGrid Color="ChessGrid.GridColor.Black" yPos="yPos" xPos="i" Board="Board"></ChessGrid>
+        }
+        else
+        {
+            <ChessGrid Color="ChessGrid.GridColor.White" yPos="yPos" xPos="i" Board="Board"></ChessGrid>
+        }
+    }
+    else
+    {
+        if (Line == ChessLineType.Black)
+        {
+            <ChessGrid Color="ChessGrid.GridColor.White" yPos="yPos" xPos="i" Board="Board"></ChessGrid>
+        }
+        else
+        {
+            <ChessGrid Color="ChessGrid.GridColor.Black" yPos="yPos" xPos="i" Board="Board"></ChessGrid>
+        }
+    }
+}
+
+@code
+{
+    [Parameter]
+    public ChessLineType Line { get; set; } = ChessLineType.White;
+
+    [Parameter]
+    public int yPos { get; set; } = 0;
+    
+    [Parameter]
+    public ChessBoard Board { get; set; }
+    
+    public enum ChessLineType
+    {
+        Black,
+        White,
+    }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+            Console.WriteLine("Chess line y :"  + yPos);
+    }
+}
+
+

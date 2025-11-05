@@ -1,0 +1,75 @@
+﻿@page "/chess"
+
+<PageTitle>Chess</PageTitle>
+
+<div class="text-title center">Modify your board</div>
+
+@* White Board *@
+<div class="chess-container center">
+    <ChessBoard Chess="this"></ChessBoard>
+</div>
+
+
+@* Create Pieces  *@
+<div class="center">
+    <table>
+        <tr>
+            <td class="chess-piece-holder">
+                <ChessPiece Chess="this"/>
+            </td>
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"v> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+            @* <td class="chess-piece-holder"> *@
+            @*     <img src="Images/PawnWhite.png" class="chess-piece"> *@
+            @* </td> *@
+        </tr>
+        @* <tr> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/RookWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/KnightWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/BishopWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/QueenWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/KingWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/BishopWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/KnightWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @*     <td class="chess-piece-holder"> *@
+        @*         <img src="Images/RookWhite.png" class="chess-piece"> *@
+        @*     </td> *@
+        @* </tr> *@
+    </table>
+</div>
+
+
+@code
+{
+    public ChessBoard Board { get; set; }
+}

@@ -1,0 +1,13 @@
+﻿@using Chessor.Pages
+@inject IJSRuntime JS
+@inject JsService JsService
+
+@code {
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            JsService.SetJsService(JS);
+        }
+    }       
+}

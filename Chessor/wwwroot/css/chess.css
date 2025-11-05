@@ -1,0 +1,53 @@
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.grid{
+    background: #000000;
+    padding: 1vw;
+    width: 52vw;
+    height: 27vw;
+}
+
+.text-title
+{
+    font-size: 5vw;
+}
+
+.center
+{
+    display: flex;
+    justify-content: center;
+}
+
+.white-grid
+{
+    background: #d3d3d3;
+}
+
+.black-grid
+{
+    background: #393939;
+}
+
+.chess-grid
+{
+    width: 6.25vw;
+    height: 6.25vw;
+}
+
+.chess-piece{
+    position: absolute;
+    user-select: none;
+    cursor: pointer;
+    width: 6.25vw;
+    height: 6.25vw;
+}
+
+
+.placeable{
+    --pos-x : 0;
+    --pos-y : 0;
+    left: var(--pos-x, 0px);
+    top: var(--pos-y, 0px);
+}
