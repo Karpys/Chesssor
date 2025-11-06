@@ -1,4 +1,5 @@
 ﻿@page "/chess"
+@using System.Numerics
 
 <PageTitle>Chess</PageTitle>
 
@@ -15,6 +16,7 @@
     <table>
         <tr>
             <td class="chess-piece-holder">
+                <ChessPiece Chess="this"/>
                 <ChessPiece Chess="this"/>
             </td>
             @* <td class="chess-piece-holder"> *@
@@ -72,4 +74,18 @@
 @code
 {
     public ChessBoard Board { get; set; }
+    public Vector2 MousePosition { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine("Try init mouse");
+        await JsService.Js.InvokeVoidAsync("chessHelper.initializeMouseMove", DotNetObjectReference.Create(this));
+    }
+
+    [JSInvokable]
+    public void OnGlobalMouseMove(double x, double y)
+    {
+        Console.Write("x " + x);   
+        Console.Write("y " + y);   
+    }
 }

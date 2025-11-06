@@ -6,8 +6,10 @@ public static class DivHelper
 {
     public static async Task<Position> GetDivPosition(ElementReference elementRef)
     {
-        return await JsService.Js.InvokeAsync<Position>("domHelper.getElementPositionRef", elementRef);
+        Console.WriteLine("Try invoke element positionRef");
+        return await JsService.Js.InvokeAsync<Position>("chessHelper.getElementPositionRef", elementRef);
     }
+    
 }
 
 public class JsService

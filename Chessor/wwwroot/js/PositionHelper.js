@@ -1,4 +1,4 @@
-﻿window.domHelper = {
+﻿window.chessHelper = {
     getElementPositionRef: function (el) {
         if (!el) return null;
         const rect = el.getBoundingClientRect();
@@ -8,5 +8,11 @@
             width: rect.width,
             height: rect.height
         };
+    },
+
+    initializeMouseMove: function (dotnetHelper) {
+        document.addEventListener('mousemove', (e) => {
+            dotnetHelper.invokeMethodAsync('OnGlobalMouseMove', e.clientX, e.clientY);
+        });
     }
 };
