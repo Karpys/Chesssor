@@ -1,5 +1,6 @@
 ﻿@using System.Numerics
 @using Chessor.Helpers
+@implements Chessor.Interfaces.IPickable
 <img src="Images/PawnWhite.png" class="chess-piece"
      draggable="false"
      @onmousedown="SelectPiece"
@@ -19,8 +20,22 @@
     
     [Parameter]
     public Chess Chess { get; set; }
-    
+
+    public bool IsSelect => _isSelect;
     public Vector2 Coordinate { get => _coordinate; set => _coordinate = value; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (firstRender)
+            Initialize();
+    }
+
+    private void Initialize()
+    {
+        Chess.AddPickable(this);
+    }
 
     void SelectPiece(MouseEventArgs e)
     {
@@ -56,4 +71,5 @@
         _coordinate.X = (int)(e.ClientX - _xOffset);
         _coordinate.Y = (int)(e.ClientY - _yOffset);
     }
+
 }

@@ -14,5 +14,9 @@
         document.addEventListener('mousemove', (e) => {
             dotnetHelper.invokeMethodAsync('OnGlobalMouseMove', e.clientX, e.clientY);
         });
+
+        document.addEventListener("mousedown", () => {
+            dotnetHelper.invokeMethodAsync("OnGlobalMouseClick");
+        });
     }
 };

@@ -1,5 +1,7 @@
 ﻿@page "/chess"
 @using System.Numerics
+@using Chessor.Helpers
+@using Chessor.Interfaces
 
 <PageTitle>Chess</PageTitle>
 
@@ -73,19 +75,26 @@
 
 @code
 {
+    
     public ChessBoard Board { get; set; }
-    public Vector2 MousePosition { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
-        Console.WriteLine("Try init mouse");
-        await JsService.Js.InvokeVoidAsync("chessHelper.initializeMouseMove", DotNetObjectReference.Create(this));
+        base.OnAfterRender(firstRender);
+
+        if (firstRender)
+        {
+            MouseEvent.OnClick += TrySelectPiece;
+        }
     }
 
-    [JSInvokable]
-    public void OnGlobalMouseMove(double x, double y)
+    private void TrySelectPiece(Vector2 vec)
     {
-        Console.Write("x " + x);   
-        Console.Write("y " + y);   
+        Console.WriteLine("Try select");
+    }
+
+
+    public void AddPickable(IPickable pickable)
+    {
     }
 }
