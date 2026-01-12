@@ -75,8 +75,17 @@
 
 @code
 {
+    private List<IPickable> m_Pickables = new List<IPickable>();
+    private float m_PickRange = 50;
+    private IPickable? m_CurrentPickable = null;
     
     public ChessBoard Board { get; set; }
+    
+    public void AddPickable(IPickable pickable)
+    {
+        Console.WriteLine("Add pickable");
+        m_Pickables.Add(pickable);
+    }
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -84,17 +93,54 @@
 
         if (firstRender)
         {
-            MouseEvent.OnClick += TrySelectPiece;
+            MouseEvent.OnClick += OnMouseClick;
+            MouseEvent.MouseMove += MouseMove;
         }
     }
 
-    private void TrySelectPiece(Vector2 vec)
+    private void MouseMove(Vector2 position)
     {
-        Console.WriteLine("Try select");
+        if (m_CurrentPickable != null)
+        {
+            Console.WriteLine("In pick movement");
+            m_CurrentPickable.InPickMovement(position);
+        }
     }
 
-
-    public void AddPickable(IPickable pickable)
+    private void OnMouseClick(Vector2 position)
     {
+        Console.WriteLine("On mouse click");
+        if (m_CurrentPickable == null)
+        {
+            TrySelect(position);
+        }
+        else
+        {
+            TryRelease();
+        }
+    }
+
+    private void TryRelease()
+    {
+        m_CurrentPickable?.Release(MouseEvent.MousePosition);
+        m_CurrentPickable = null;
+    }
+
+    private void TrySelect(Vector2 position)
+    {
+        if(m_Pickables.Count == 0)
+            return;
+        
+        
+        IPickable closest = m_Pickables.GetClosest(position,out float distance);
+        Console.WriteLine(distance);
+
+        if (distance < m_PickRange)
+        {
+            closest.TryPick(position, out bool newPicked);
+            Console.WriteLine(newPicked);
+            if (newPicked)
+                m_CurrentPickable = closest;
+        }
     }
 }

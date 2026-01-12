@@ -4,10 +4,10 @@ using System.Numerics;
 
 public static class PositionHelper
 {
-    public static T GetClosest<T>(this List<T> list, Vector2 position) where T : ICoordinate
+    public static T GetClosest<T>(this List<T> list, Vector2 position, out float distance) where T : ICoordinate
     {
         T closest = list[0];
-        float distance = Vector2.Distance(position, closest.Coordinate);
+        distance = Vector2.Distance(position, closest.Coordinate);
 
         foreach (T element in list)
         {

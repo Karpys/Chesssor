@@ -3,9 +3,6 @@
 @implements Chessor.Interfaces.IPickable
 <img src="Images/PawnWhite.png" class="chess-piece"
      draggable="false"
-     @onmousedown="SelectPiece"
-     @onmouseup="DeselectPiece"
-     @onmousemove="MovePiece"
      style="left: @_posXpx; top: @_posYpx" 
      >
 
@@ -37,22 +34,22 @@
         Chess.AddPickable(this);
     }
 
-    void SelectPiece(MouseEventArgs e)
+    void SelectPiece(Vector2 mousePosition)
     {
         _isSelect = true;
-        _yOffset = e.ClientY - Coordinate.Y;
-        _xOffset = e.ClientX - Coordinate.X;
+        _yOffset = mousePosition.Y - Coordinate.Y;
+        _xOffset = mousePosition.X - Coordinate.X;
     }
     
-    void DeselectPiece(MouseEventArgs e)
+    void DeselectPiece(Vector2 mousePosition)
     {
         _isSelect = false;
-        TryPlaceOnBoard(e);
+        TryPlaceOnBoard(mousePosition);
     }
 
-    private void TryPlaceOnBoard(MouseEventArgs e)
+    private void TryPlaceOnBoard(Vector2 mousePosition)
     {
-        ChessGrid closest = Chess.Board.ChessGrids.GetClosest(Coordinate);
+        ChessGrid closest = Chess.Board.ChessGrids.GetClosest(Coordinate,out _);
         PlaceOnChessGrid(closest);
     }
 
@@ -61,15 +58,39 @@
         _coordinate.X = (int)chessGrid.Position.X;
         _coordinate.Y = (int)chessGrid.Position.Y;
         chessGrid.Assign(this);
+        InvokeAsync(StateHasChanged);
     }
 
-    void MovePiece(MouseEventArgs e)
+    void MovePiece(Vector2 mousePosition)
     {
         if(!_isSelect)
             return;
         
-        _coordinate.X = (int)(e.ClientX - _xOffset);
-        _coordinate.Y = (int)(e.ClientY - _yOffset);
+        _coordinate.X = (int)(mousePosition.X - _xOffset);
+        _coordinate.Y = (int)(mousePosition.Y - _yOffset);
+        InvokeAsync(StateHasChanged);
     }
 
+    public void TryPick(Vector2 mousePosition,out bool isNewPicked)
+    {
+        if (_isSelect)
+        {
+            isNewPicked = false;
+            return;
+        }
+        
+        _isSelect = true;
+        isNewPicked = true;
+        SelectPiece(mousePosition);
+    }
+
+    public void InPickMovement(Vector2 position)
+    {
+        MovePiece(position);
+    }
+
+    public void Release(Vector2 mousePosition)
+    {
+        DeselectPiece(mousePosition);
+    }
 }

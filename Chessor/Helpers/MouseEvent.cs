@@ -6,6 +6,7 @@ public static class MouseEvent
 {
     public static Vector2 MousePosition =Vector2.Zero;
     public static Action<Vector2> OnClick = null;
+    public static Action<Vector2> MouseMove = null;
 
     public static void OnMouseClick(Vector2 position)
     {
@@ -15,5 +16,6 @@ public static class MouseEvent
     public static void OnMouseMove(Vector2 position)
     {
         MousePosition = position;
+        MouseMove?.Invoke(position);
     }
 }

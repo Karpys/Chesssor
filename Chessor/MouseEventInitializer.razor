@@ -13,14 +13,12 @@
     [JSInvokable]
     public void OnGlobalMouseMove(double x, double y)
     {
-        Console.WriteLine("On mouse move");
         MouseEvent.OnMouseMove(new Vector2((float)x, (float)y));
     }
     
     [JSInvokable]
     public void OnGlobalMouseClick()
     {
-        Console.WriteLine("On mouse click");
         MouseEvent.OnMouseClick(MouseEvent.MousePosition);
     }
 }
